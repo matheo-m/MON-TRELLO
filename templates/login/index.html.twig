@@ -23,7 +23,7 @@
                         <h1 class="h3 mb-3 fw-bold text-center">Se connecter</h1>
 
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" name="email" id="inputEmail"
+                            <input type="text" class="form-control" name="_username" id="inputEmail"
                                 placeholder="Nom d'utilisateur" value="{{ last_username }}">
                             <label for="inputEmail">Nom d'utilisateur</label>
                         </div>
@@ -37,8 +37,10 @@
                         <div class="form-floating mb-3">
                         </div>
 
+                        <button class="btn btn-lg btn-primary w-100" type="submit">Se connecter</button>
+
                         <p class="my-3 text-muted">
-                            Vous avez n'avez pas de compte ? <a href=" {{ path('register_index') }}">Connectez-vous</a>
+                            Vous avez n'avez pas de compte ? <a href=" {{ path('register_index') }}">Inscrivez-vous</a>
                         </p>
         </form>
     </div>
