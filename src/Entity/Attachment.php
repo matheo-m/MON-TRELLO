@@ -19,6 +19,10 @@ class Attachment
     #[ORM\Column(length: 255)]
     private ?string $path = null;
 
+    #[ORM\ManyToOne(inversedBy: 'attachements')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Issue $issue = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +48,18 @@ class Attachment
     public function setPath(string $path): static
     {
         $this->path = $path;
+
+        return $this;
+    }
+
+    public function getIssue(): ?Issue
+    {
+        return $this->issue;
+    }
+
+    public function setIssue(?Issue $issue): static
+    {
+        $this->issue = $issue;
 
         return $this;
     }

@@ -51,10 +51,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
     #[ORM\ManyToMany(targetEntity: Project::class, mappedBy: 'members')]
     private Collection $projects;
 
+    /**
+     * @var Collection<int, Issue>
+     */
+    #[ORM\OneToMany(targetEntity: Issue::class, mappedBy: 'assignee')]
+    private Collection $assignedIssues;
+
+    /**
+     * @var Collection<int, Issue>
+     */
+    #[ORM\OneToMany(targetEntity: Issue::class, mappedBy: 'reporter')]
+    private Collection $reportedIssues;
+
+    #[ORM\ManyToOne]
+    private ?Project $selectedProject = null;
+
     public function __construct()
     {
         $this->leadedProjects = new ArrayCollection();
         $this->projects = new ArrayCollection();
+        $this->assignedIssues = new ArrayCollection();
+        $this->reportedIssues = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -214,6 +231,78 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
         if ($this->projects->removeElement($project)) {
             $project->removeMember($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Issue>
+     */
+    public function getAssignedIssues(): Collection
+    {
+        return $this->assignedIssues;
+    }
+
+    public function addAssignedIssue(Issue $assignedIssue): static
+    {
+        if (!$this->assignedIssues->contains($assignedIssue)) {
+            $this->assignedIssues->add($assignedIssue);
+            $assignedIssue->setAssignee($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssignedIssue(Issue $assignedIssue): static
+    {
+        if ($this->assignedIssues->removeElement($assignedIssue)) {
+            // set the owning side to null (unless already changed)
+            if ($assignedIssue->getAssignee() === $this) {
+                $assignedIssue->setAssignee(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Issue>
+     */
+    public function getReportedIssues(): Collection
+    {
+        return $this->reportedIssues;
+    }
+
+    public function addReportedIssue(Issue $reportedIssue): static
+    {
+        if (!$this->reportedIssues->contains($reportedIssue)) {
+            $this->reportedIssues->add($reportedIssue);
+            $reportedIssue->setReporter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReportedIssue(Issue $reportedIssue): static
+    {
+        if ($this->reportedIssues->removeElement($reportedIssue)) {
+            // set the owning side to null (unless already changed)
+            if ($reportedIssue->getReporter() === $this) {
+                $reportedIssue->setReporter(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getSelectedProject(): ?Project
+    {
+        return $this->selectedProject;
+    }
+
+    public function setSelectedProject(?Project $selectedProject): static
+    {
+        $this->selectedProject = $selectedProject;
 
         return $this;
     }
