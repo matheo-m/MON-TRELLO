@@ -9,6 +9,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,8 +19,11 @@ class RegisterType extends AbstractType
     {
         $builder
             ->add('username', TextType::class, [
-                // 'label' => 'Username',
+                'attr' => [
+                    'placeholder' => "Nom d'utilisateur",
+                ],
                 'required' => true,
+                'label' =>  "Nom d'utilisateur"
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
@@ -27,8 +31,22 @@ class RegisterType extends AbstractType
                 'first_options' => [
                     'attr' => [
                         'placeholder' => 'Mot de passe',
-                    ]
-                ]
+                    ],
+                    'label' => 'Mot de passe',
+                    ],
+                'second_options' => [
+                    'attr' => [
+                        'placeholder' => 'Confirmer le mot de passe',
+                    ],
+                    'label' => 'Confirmer le mot de passe',
+                ],
+                
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'S\'inscrire',
+                'attr' => [
+                    'class' => 'btn btn-lg btn-primary w-100',
+                ],
             ])
         ;
     }
