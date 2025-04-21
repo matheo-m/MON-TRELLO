@@ -1,20 +1,47 @@
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block title %}Hello LoginController!{% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <title>Se connecter</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    {% block javascripts %}
+    {% block importmap %}
+    {{ importmap('app') }}
+    {% endblock %}
+    {% endblock %}
+</head>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<body>
+    <div class="container mt-5">
+        <form class="row justify-content-center" method="post">
+            <div class="col-md-6 col-sm-12 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="h3 mb-3 fw-bold text-center">Se connecter</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/app/src/Controller/LoginController.php</code></li>
-        <li>Your template at <code>/app/templates/login/index.html.twig</code></li>
-    </ul>
-</div>
-{% endblock %}
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" name="email" id="inputEmail"
+                                placeholder="Nom d'utilisateur" value="{{ last_username }}">
+                            <label for="inputEmail">Nom d'utilisateur</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" name="_password" id="inputPassword"
+                                placeholder="Mot de passe">
+                            <label for="inputPassword">Mot de passe</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                        </div>
+
+                        <p class="my-3 text-muted">
+                            Vous avez n'avez pas de compte ? <a href=" {{ path('register_index') }}">Connectez-vous</a>
+                        </p>
+        </form>
+    </div>
+</body>
+
+</html>

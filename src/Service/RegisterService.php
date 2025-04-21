@@ -21,8 +21,6 @@ class RegisterService
         $hashedPassword = $this->passwordHasher->hashPassword($user, $user->getPassword());
         $user->setPassword($hashedPassword);
 
-        dd($user);
-
         // Persist the user entity
         $this->em->persist($user);
         $this->em->flush();
